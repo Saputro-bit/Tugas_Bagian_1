@@ -28,67 +28,50 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Menghubungkan variabel btnLogin dengan componen button pada Layout
-        btnLogin=findViewById(R.id.btsignIn);
+        btnLogin = findViewById(R.id.btsignIn);
 
         //Menghubungkan variabel edemail dengan componen button pada Layout
-        edemail=findViewById(R.id.edEmail);
+        edemail = findViewById(R.id.edEmail);
 
         //Menghubungkan variabel edpassword dengan componen button pada Layout
-        edpassword=findViewById(R.id.edPassword);
+        edpassword = findViewById(R.id.edPassword);
 
         //membuat fingfi onclik pada button btnLogin
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String nama = edemail.getText().toString();
+                String password = edpassword.getText().toString();
 
-                //menyimpan input user di edittext email ke dalam variabel nama
-                nama = edemail.getText().toString();
+                //mengeset email yang benar
+                String email = "admin@mail.com";
 
-                //menyimpan input user di edittext password ke dalam variabel nama
-                password = edemail.getText().toString();
-
-                //menengeset email yang benar
-                String email = "muhammadnoorsaputro23@mail.com";
-                //meneset password yang benar
+                //mengeset password yang benar
                 String pass = "123456";
 
-                //mengecek apakahh edittext email dan password terdapat isi atau tidak
-                if (nama.isEmpty() || password.isEmpty()) {
-                    //membuat variabel toast dan menampilkan pesan "Login Sukse"
+                if (nama.equals("admin@mail.com") && password.equals("123456")) {
+                    //jika login berhasil
                     Toast t = Toast.makeText(getApplicationContext(),
-                            "Login Sukses",
-                            Toast.LENGTH_LONG);
-                    //menampilan toast
+                            "Login Sukses", Toast.LENGTH_LONG);
                     t.show();
-                } else {
+                    //membuat objek bundle
+                    Bundle b = new Bundle();
+                    //memasukkan value dari variabel nama dengan kunci "a"
+                    // dan dimasukkan kedalam bundle
+                    b.putString("a", nama.trim());
 
-                    //mengecek apakaj isi dari rmail dan password sudah sama dengan email dan
-                    //password yang sudah di set
-                    if (nama.equals(email) && password.equals(pass)) {
-                        //membuat variabel toast dan menampilkan pesan "login Sukses"
-                        Toast t = Toast.makeText(getApplicationContext(),
-                                "Login sukse",
-                                Toast.LENGTH_LONG);
-                        //menampilkan toast
-                        t.show();
-                        //membuat objek bundle
-                        Bundle b = new Bundle();
+                    //memasukkan value dari variable password dengan kunci "b"
+                    // dan dimasukkan kedalam bundle
+                    b.putString("b", password.trim());
 
-                        //memasukkan value dari variabel nama kunci "a"
-                        //dan dimasukkan ke dalam bundle
-                        b.putString("a", nama.trim());
+                    //membuat objek intent berpindah activity dari mainactivity ke ActivityHasil
+                    Intent i = new Intent(getApplicationContext(), Home.class);
 
-                        //memasukkan value dari variabel password dengan kunci "b"
-                        //dan dimaasukkan kedalam bundle
-                        b.putString("b", password.trim());
+                    //memasukkan bundle kedalam intent untuk dikirimkan ke ActivityHasil
+                    i.putExtras(b);
 
-                        //membuat objek intent berpindah activity dari mainactivity ke ActivityHasil
-                        Intent i = new Intent(getApplicationContext(), ActivityHasil.class);
-
-                        //memasukkan bundle kedalam intent untuk dikirimkan ke ActivityHasil
-                        i.putExtras(b);
-                        //berpindah ke ActivityHasil
-                        startActivity(i);
+                    //berpindah ke ActivityHasil
+                    startActivity(i);
                     } else {
                         //membuat variabel toast dan membut toast dan menampilkan pesan "Login Sukses"
                         Toast t = Toast.makeText(getApplicationContext(),
@@ -97,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                         t.show();
                     }
                 }
-            }
         });
     }
 
